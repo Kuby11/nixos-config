@@ -1,0 +1,155 @@
+prefer-no-csd
+
+spawn-at-startup "serpantinum"
+
+blur {
+    passes 3
+    offset 4
+    saturation 1.0
+}
+
+window-rule {
+    draw-border-with-background false
+    geometry-corner-radius 16
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="^kitty$"
+    clip-to-geometry true
+    opacity 0.65
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
+    match app-id="^nautilus$"
+    clip-to-geometry true
+    opacity 0.65
+    background-effect {
+        blur true
+    }
+}
+
+layer-rule {
+    match namespace="^launcher$"
+
+    opacity 0.65
+    background-effect {
+        blur true
+    }
+}
+
+layout {
+
+    border {
+        width 2.0
+        active-color "#0080FE"
+    }
+
+    focus-ring {
+        width 1.0
+        inactive-color "#00000000"
+        active-color "#0080FE"
+    }
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+        }
+    }
+    touchpad {
+        tap
+    }
+}
+
+output "Virtual-1" {
+    mode "1920x1080@60"
+    scale 1.0
+}
+
+binds {
+    Mod+Return { spawn "kitty"; }
+    Mod+D { spawn "serpantinum" "msg" "toggle" "launcher"; }
+    Mod+I { spawn "serpantinum" "msg" "toggle" "guide"; }
+    Mod+Shift+E { spawn "wlogout"; }
+
+    // Управление окнами
+    Mod+Q { close-window; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+V { toggle-window-floating; }
+    Mod+Space { switch-focus-between-floating-and-tiling; }
+
+    // Фокус (стрелки)
+    Mod+Left  { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+
+    // Фокус (hjkl)
+    Mod+H { focus-column-left; }
+    Mod+L { focus-column-right; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+
+    // Перемещение (стрелки)
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+Down  { move-window-down; }
+    Mod+Shift+Up    { move-window-up; }
+
+    // Перемещение (hjkl)
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+L { move-column-right; }
+    Mod+Shift+J { move-window-down; }
+    Mod+Shift+K { move-window-up; }
+
+    // Размер колонки/окна
+    Mod+R { switch-preset-column-width; }
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal  { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal  { set-window-height "+10%"; }
+
+    // Workspaces
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+
+    Mod+Page_Down { focus-workspace-down; }
+    Mod+Page_Up   { focus-workspace-up; }
+    Mod+Shift+Page_Down { move-column-to-workspace-down; }
+    Mod+Shift+Page_Up   { move-column-to-workspace-up; }
+
+    // Мониторы
+    Mod+Comma  { focus-monitor-left; }
+    Mod+Period { focus-monitor-right; }
+    Mod+Shift+Comma  { move-column-to-monitor-left; }
+    Mod+Shift+Period { move-column-to-monitor-right; }
+
+    // Скриншоты
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // Громкость
+    XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%+"; }
+    XF86AudioLowerVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%-"; }
+    XF86AudioMute { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+
+    // Справка / выход
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Shift+Q { quit; }
+}

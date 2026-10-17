@@ -1,0 +1,271 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "file",
+    "color": {
+      "1": "light_blue",
+    },
+    "source": "/etc/nixos/modules/services/fastfetch/logo.txt",
+  },
+  "display": {
+    "separator": " ",
+    "color": {
+      "separator": "light_magenta",
+      "keys": "light_blue",
+    },
+
+    "bar": {
+      "border": {
+        "left": "\uee00",
+        "leftElapsed": "\uee03",
+        "right": "\uee02",
+        "rightElapsed": "\uee05",
+      },
+      "char": {
+        "total": "\uee01",
+        "elapsed": "\uee04",
+      },
+      "color": {
+        "total": null,
+        "elapsed": "light_magenta",
+      },
+    },
+    "percent": {
+      "type": ["bar", "bar-monochrome"],
+    },
+    // Constants are reusable strings referenced by {$1}, {$2}, etc.
+    // These contain ANSI escape codes for cursor positioning
+    "constants": [
+      "╔", // {$1}  - top left corner for outer borders
+      "════════════════════════════════════════════════════════════════", // {$2}  - horizontal line for outer borders (64 chars)
+      "╗", // {$3}  - top right corner for outer borders
+      "╚", // {$4}  - bottom left corner for outer borders
+      "╝", // {$5}  - bottom right corner for outer borders
+      "║", // {$6}  - side bar
+      "┌", // {$7}  - top left corner for outer borders
+      "────────────────────────────────────────────────────────────", // {$8}  - horizontal line for inner borders (60 chars)
+      "┐", // {$9}  - top right corner for outer borders
+      "└", // {$10}  - bottom left corner for outer borders
+      "┘", // {$11} - bottom right corner for outer borders
+      "\u001b[1C", // {$12} - move cursor right 1 columns
+      "\u001b[2C", // {$13} - move cursor right 2 columns
+      "\u001b[3C", // {$14} - move cursor right 3 columns
+      "\u001b[4C", // {$15} - move cursor right 4 columns
+      "\u001b[5C", // {$16} - move cursor right 5 columns
+      "\u001b[7C", // {$17} - move cursor right 7 columns
+      "\u001b[42D", // {$18} - move cursor left 33 columns
+      "\u001b[36D", // {$19} - move cursor left 36 columns
+      "\uf240", // {$20} - battery
+      "\uefc5", // {$21} - memory
+      "\udb82\udfaf", // {$22} - pacman
+      "\udb80\udea0", // {$23} - ghost filled
+      "\udb85\ude5d", // {$24} - ghost transparent
+      "\ueb8a", // {$25} - circle filled (small)
+      "\uec07", // {$26} - circle transparent (small)
+      "\uf192", // {$27} - dot circle
+    ],
+    "brightColor": false,
+  },
+  "modules": [
+    {
+      "type": "version",
+      "key": " ",
+      "format": "{#light_blue}{$7}{$8}{$9}{$19}{#bright_cyan} {version} ",
+    },
+    {
+      "type": "os",
+      "key": "{icon} Distro {$13}",
+      "format": "{#white}{pretty-name} {arch}",
+    },
+    {
+      "type": "kernel",
+      "key": "{icon} Kernel {$13}",
+      "format": "{#white}{release}",
+    },
+    {
+      "type": "uptime",
+      "key": "{icon} Uptime {$13}",
+      "format": "{#white}{formatted}",
+    },
+    {
+      "type": "disk",
+      "key": "{icon} OS Age {$13}",
+      "folders": "/",
+      "format": "{#white}{create-time:10} [{days} days]",
+    },
+    {
+      "type": "datetime",
+      "key": "{icon} Fetched {$12}",
+      "format": "{#white}{year}, {month-name-short} {day-pretty} {hour-pretty}:{minute-pretty}:{second-pretty} {timezone-name}",
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#blue}{$10}{$8}{$11}{$19}",
+    },
+
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#light_cyan}{$7}{$8}{$9}{$19}{#bright_cyan} Hardware ",
+    },
+    {
+      "type": "board",
+      "keyColor": "light_cyan",
+      "key": "{icon} Board {$12}",
+      "format": "{#white}{name} ({version})",
+    },
+    {
+      "type": "cpu",
+      "keyColor": "light_cyan",
+      "key": "{icon} CPU {$14}",
+      "showPeCoreCount": true,
+      "format": "{#white}{name} ({cores-logical}) @ {freq-max}",
+    },
+    {
+      "type": "gpu",
+      "keyColor": "light_cyan",
+      "key": "{icon} GPU {$14}",
+      "format": "{#white}{vendor} {name} [{type}]",
+    },
+    {
+      "type": "disk",
+      "keyColor": "light_cyan",
+      "key": "{icon} disk {$13}",
+      "folders": "/",
+      "percent": {
+        "type": 9,
+        "green": 50,
+        "yellow": 80,
+      },
+    },
+    {
+      "type": "memory",
+      "keyColor": "light_cyan",
+      "key": "{icon} RAM {$14}",
+      "percent": {
+        "type": 9,
+        "green": 30,
+        "yellow": 80,
+      },
+    },
+    {
+      "type": "swap",
+      "keyColor": "light_cyan",
+      "key": "{icon} swap {$13}",
+      "percent": {
+        "type": 9,
+        "green": 30,
+        "yellow": 70,
+      },
+    },
+    {
+      "type": "battery",
+      "keyColor": "light_cyan",
+      "key": "{icon} Battery {$13}",
+      "format": "{#light_cyan} {$20} Batt {capacity-bar}  {#white}{capacity}, {time-formatted} [{status}]",
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#light_cyan}{$10}{$8}{$11}{$19}",
+    },
+
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#light_green}{$7}{$8}{$9}{$19}{#bright_green} Desktop ",
+    },
+    {
+      "type": "de",
+      "keyColor": "light_green",
+      "key": "{icon} Desktop {$14}",
+      "format": "{#white}{pretty-name} {version}",
+    },
+    {
+      "type": "wm",
+      "keyColor": "light_green",
+      "key": "{icon} session {$13}",
+      "format": "{#white}{pretty-name} ({protocol-name})",
+    },
+    {
+      "type": "gpu",
+      "keyColor": "light_green",
+      "key": "{icon} G-Driver {$12}",
+      "format": "{#white}{driver}",
+    },
+    {
+      "type": "display",
+      "keyColor": "light_green",
+      "key": "{icon} Display {$13}",
+      "format": "{#white}{width}x{height} @ {refresh-rate}hz",
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#light_green}{$10}{$8}{$11}{$19}",
+    },
+
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#yellow}{$7}{$8}{$9}{$19}{#bright_yellow} Terminal ",
+    },
+    {
+      "type": "shell",
+      "keyColor": "yellow",
+      "key": "{icon} Shell {$16}",
+      "format": "{#white}{process-name} {version}",
+    },
+    {
+      "type": "terminal",
+      "keyColor": "yellow",
+      "key": "{icon} Terminal {$13}",
+      "format": "{#white}{process-name} {version}",
+    },
+    {
+      "type": "terminalfont",
+      "keyColor": "yellow",
+      "key": "{icon} Term Font {$12}",
+      "format": "{#white}{name} ({size})",
+    },
+    // {
+    //   "type": "terminaltheme",
+    //   "keyColor": "yellow",
+    //   "key": "{icon} Colours {$14}",
+    //   "format": "{#white}{fg-color} (FG) [{fg-type}] - {bg-color} (BG) [{bg-type}]",
+    // },
+    {
+      "type": "packages",
+      "keyColor": "yellow",
+      "key": "{icon} Packages {$13}",
+      // "format": "{#white}{all} (total), {am-system} (am-system), {am-user} (am-user), {appimage} (appimage), {apk} (apk), {brew} (brew), {brew-all} (brew-all), {brew-cask} (brew-cask), {cards} (cards), {choco} (choco), {dpkg} (dpkg), {emerge} (emerge), {eopkg} (eopkg), {flatpak-all} (flatpak), {flatpak-system} (flatpak-system), {flatpak-user} (flatpak-user), {guix-all} (guix), {guix-home} (guix-home), {guix-system} (guix-system), {guix-user} (guix-user), {hpkg-all} (hpkg), {hpkg-system} (hpkg-system), {hpkg-user} (hpkg-user), {kiss} (kiss), {linglong} (linglong), {lpkg} (lpkg), {lpkgbuild} (lpkgbuild), {macports} (macports), {mport} (mport), {moss} (moss), {nix-all} (nix), {nix-default} (nix-default), {nix-system} (nix-system), {nix-user} (nix-user), {opkg} (opkg), {pacman} (pacman), {pacman-branch} (pacman-branch), {pacstall} (pacstall), {paludis} (paludis), {pisi} (pisi), {pkg} (pkg), {pkgsrc} (pkgsrc), {pkgtool} (pkgtool), {rpm} (rpm), {scoop-global} (scoop-global), {scoop-user} (scoop-user), {snap} (snap), {soar} (soar), {sorcery} (sorcery), {winget} (winget), {xbps} (xbps)",
+      // "format": "{#white}{appimage} (appimage), {flatpak-all} (flatpak), {pacman} (pacman)",
+      "format": "{#white}{all} (total)",
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{#yellow}{$10}{$8}{$11}{$19}",
+    },
+
+    // {
+    //   "type": "colors",
+    //   "paddingLeft": 4,
+    //   "symbol": "diamond"
+    // },
+    // {
+    //     "type": "custom",
+    //     "format": "{$14} {#light_black}{$27} {#bright_white}{$27} {#cyan}{$27} {#magenta}{$27} {#blue}{$27} {#yellow}{$27} {#green}{$27} {#red}{$27}"
+    // },
+    {
+      "type": "custom",
+      "format": "{$17}{$14}{$13} {#light_yellow}{$22} {#light_white}{$25} {#light_white}{$25} {#light_white}{$25} {#light_white}{$25} {#light_white}{$25} {#light_white}{$25} {#light_white}{$25} {#light_white}{$25} {#magenta}{$23} {#cyan}{$23} {#yellow}{$23} {#red}{$23}",
+    },
+    // {
+    //   "type": "custom",
+    //   "key": " ",
+    //   "format": "{#keys}{$4}{$2}{$5}",
+    // },
+  ],
+}
